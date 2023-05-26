@@ -1,0 +1,29 @@
+{
+  "short_name": "pwa-app",
+  "name": "pwa-app",
+  "icons": [
+    {
+      "src": "./src/assets/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "shortcuts": [
+    {
+      "name": "pwa-app",
+      "short_name": "pwa-app",
+      "description": "pwa testing app project",
+      "url": "/",
+      "icons": [
+        {
+          "src": "./src/assets/icon.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "descriptions": "pwa testing app project"
+}
