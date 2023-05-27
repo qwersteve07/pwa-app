@@ -6,6 +6,8 @@ const addResourcesToCache = async (resources) => {
 
 // service worker install event
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
+
   event.waitUntil(
     addResourcesToCache(["/", "/src/assets/react.svg", "/vite.svg"])
   );
@@ -43,7 +45,14 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(cacheFirst(event.request));
 });
 
+const enableNavigationPreload = async () => {
+  if (self.registration.navigationPreload) {
+    self.registration.navigationPreload.enable();
+  }
+};
+
 // service worker activate event
 self.addEventListener("activate", (event) => {
-  event.waitUntil(self.registration?.navigationPreload.enable());
+  event.waitUntil(self.clients.claim());
+  event.waitUntil(enableNavigationPreload());
 });
