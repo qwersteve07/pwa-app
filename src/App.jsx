@@ -6,14 +6,6 @@ import { fetchCats } from "./services/api";
 
 function App() {
   const [count, setCount] = useState(0);
-  const deferredPrompt = useRef();
-
-  useEffect(() => {
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt.current = e;
-    });
-  }, []);
 
   return (
     <>
@@ -38,7 +30,46 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <InstallPromptButton />
     </>
+  );
+}
+
+function InstallPromptButton() {
+  const [show, setShow] = useState(false);
+  const deferredPrompt = useRef();
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt.current = e;
+      setShow(true);
+    });
+  }, []);
+
+  return (
+    <button
+      style={{
+        display: show ? "block" : "none",
+        position: "fixed",
+        left: "30px",
+        top: "30px",
+      }}
+      onClick={() => {
+        deferredPrompt.current.prompt();
+        deferredPrompt.current.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("User accepted the A2HS prompt");
+          } else {
+            console.log("User dismissed the A2HS prompt");
+          }
+          deferredPrompt.current = null;
+          setShow(false);
+        });
+      }}
+    >
+      Install PWA App
+    </button>
   );
 }
 
@@ -53,7 +84,7 @@ function Cat() {
     <img
       src={cat[0]?.url}
       width={100}
-      style={{ display: "block", margin: "0 auto" }}
+      style={{ display: "block", margin: "0 auto", borderRadius: "50%" }}
     />
   );
 }
