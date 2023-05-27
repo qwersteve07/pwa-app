@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { fetchCats } from "./services/api";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +18,7 @@ function App() {
   return (
     <>
       <div>
+        <Cat />
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -37,6 +39,22 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
+  );
+}
+
+function Cat() {
+  const [cat, setCat] = useState([]);
+
+  useEffect(() => {
+    fetchCats().then((data) => setCat(data));
+  }, []);
+
+  return (
+    <img
+      src={cat[0]?.url}
+      width={100}
+      style={{ display: "block", margin: "0 auto" }}
+    />
   );
 }
 
