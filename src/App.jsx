@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -32,7 +32,66 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <InstallPromptButton />
+      <BatteryStatus />
     </>
+  );
+}
+
+function BatteryStatus() {
+  const [show, setShow] = useState(false);
+  const [batteryLevel, setBatteryLevel] = useState(0);
+  const [batteryCharging, setBatteryCharing] = useState(false);
+
+  const startBatteryWatch = async () => {
+    const battery = await navigator.getBattery();
+    updateBatteryInfo();
+
+    function updateBatteryInfo() {
+      updateBatteryLevelInfo();
+      updateBatteryCharingInfo();
+    }
+
+    function updateBatteryLevelInfo() {
+      setBatteryLevel(battery.level);
+    }
+
+    function updateBatteryCharingInfo() {
+      setBatteryCharing(battery.charging);
+    }
+
+    battery.addEventListener("levelchange", () => {
+      updateBatteryLevelInfo();
+    });
+
+    battery.addEventListener("chargingchange", () => {
+      updateBatteryCharingInfo();
+    });
+  };
+
+  useLayoutEffect(() => {
+    if ("getBattery" in navigator) {
+      setShow(true);
+      startBatteryWatch();
+    }
+  }, []);
+
+  return (
+    <div
+      className="battery-status"
+      style={{
+        display: show ? "flex" : "none",
+        backgroundColor: batteryCharging ? "#24bd24" : "transparent",
+        position: "fixed",
+        right: "30px",
+        top: "30px",
+        padding: "2px 6px",
+        fontSize: "12px",
+        borderRadius: "6px",
+        border: "1px solid white",
+      }}
+    >
+      {batteryLevel * 100} %
+    </div>
   );
 }
 
