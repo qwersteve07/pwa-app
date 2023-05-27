@@ -42,3 +42,8 @@ const cacheFirst = async (request) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(cacheFirst(event.request));
 });
+
+// service worker activate event
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.registration?.navigationPreload.enable());
+});
