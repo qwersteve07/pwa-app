@@ -8,4 +8,21 @@ export default defineConfig({
     https: true,
   },
   plugins: [react(), mkcert()],
+  build: {
+    rollupOptions: {
+      input: {
+        index: "index.html",
+        sw: "./src/sw.js",
+      },
+      output: {
+        entryFileNames: (assetInfo) => {
+          if (assetInfo.name === "sw") {
+            return "sw.js";
+          } else {
+            return "assets/[name]-[hash].js";
+          }
+        },
+      },
+    },
+  },
 });
