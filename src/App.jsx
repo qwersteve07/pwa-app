@@ -12,7 +12,6 @@ function App() {
   return (
     <>
       <div>
-        <Cat />
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
         </a>
@@ -37,22 +36,6 @@ function App() {
       <BatteryStatus />
       <MediaSession />
     </>
-  );
-}
-
-function Cat() {
-  const [cat, setCat] = useState([]);
-
-  useEffect(() => {
-    fetchCats().then((data) => setCat(data));
-  }, []);
-
-  return (
-    <img
-      src={cat[0]?.url}
-      width={100}
-      style={{ display: "block", margin: "0 auto", borderRadius: "50%" }}
-    />
   );
 }
 
