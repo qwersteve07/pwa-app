@@ -3,7 +3,7 @@
   "name": "pwa-app",
   "icons": [
     {
-      "src": "./src/assets/icon.png",
+      "src": "./icon.png",
       "type": "image/png",
       "sizes": "192x192"
     }
@@ -19,7 +19,7 @@
       "url": "/",
       "icons": [
         {
-          "src": "./src/assets/icon.png",
+          "src": "./icon.png",
           "sizes": "192x192"
         }
       ]

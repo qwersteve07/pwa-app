@@ -12,7 +12,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     addResourcesToCache([
       "/",
-      "/src/assets/react.svg",
+      "/react.svg",
       "/vite.svg",
       // using {cache: reload} to make sure fetch file from network
       new Request("./offline.html", { cache: "reload" }),
@@ -55,6 +55,7 @@ const cacheFirst = async (event) => {
     // await putInCache(event.request, networkResponse);
     return networkResponse;
   } catch (error) {
+    console.log(event.request.mode);
     if (event.request.mode === "navigate") {
       const offlineCacheResponse = await caches.match("./offline.html");
       return offlineCacheResponse;
