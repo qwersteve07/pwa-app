@@ -12,7 +12,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: "index.html",
-        sw: "./src/sw.js",
+        sw: "./sw.js",
       },
       output: {
         entryFileNames: (assetInfo) => {
