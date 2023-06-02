@@ -69,3 +69,24 @@ const cacheFirst = async (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(cacheFirst(event));
 });
+
+// service worker receive push event
+self.addEventListener("push", (event) => {
+  console.log("push events received");
+  const data = event.data.json();
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.text,
+      icon: "/vite.svg",
+      vibrate: [200, 100, 200],
+      data: data.url,
+    })
+  );
+});
+
+// service worker notification click event
+self.addEventListener("notificationclick", (event) => {
+  console.log("notification clicked!", event);
+  event.notification.close();
+  event.waitUntil(self.clients.openWindow(event.notification.data));
+});

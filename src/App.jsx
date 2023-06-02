@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import { fetchCats } from "./services/api";
 import BatteryStatus from "./features/battery-status/battery-status";
 import InstallPromptButton from "./features/install-prompt-button/install-prompt-button";
 import WakeUpToggler from "./features/wake-lock-toggler/wake-lock-toggler";
 import MediaSession from "./features/media-session/media-session";
 import Camera from "./features/camera/camera";
+import PushNotification from "./features/push-notification/push-notification";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,6 +37,7 @@ function App() {
       <WakeUpToggler />
       <BatteryStatus />
       <MediaSession />
+      <PushNotification />
     </>
   );
 }
