@@ -32,7 +32,7 @@ export default function MediaSession() {
 
   return (
     <div>
-      <audio autoPlay controls src={song} ref={audioRef} />
+      <audio controls src={song} ref={audioRef} />
     </div>
   );
 }
