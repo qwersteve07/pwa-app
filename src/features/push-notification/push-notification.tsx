@@ -7,8 +7,8 @@ import {
 } from "./utils";
 
 const PushNotification = () => {
-  const [show, setShow] = useState(false);
-  const [subscriptionId, setSubscriptionId] = useState("");
+  const [show, setShow] = useState<boolean>(false);
+  const [subscriptionId, setSubscriptionId] = useState<string>("");
 
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
