@@ -1,22 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Camera() {
-  const [show, setShow] = useState(false);
-  const [videoFacingMode, setVideoFacingMode] = useState("user");
-  const videoRef = useRef();
+type FacingMode = "user" | "environment"
 
-  function setVideoStream() {
+export default function Camera() {
+  const [show, setShow] = useState<boolean>(false);
+  const [videoFacingMode, setVideoFacingMode] = useState<FacingMode>("user");
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  function setVideoStream({ facingMode = videoFacingMode }) {
     navigator.mediaDevices
       .getUserMedia({
         audio: false,
-        video: { width: 1000, height: 1000, facingMode: videoFacingMode },
+        video: { width: 1000, height: 1000, facingMode },
       })
       .then((stream) => {
-        console.log(stream);
-        if ("srcObject" in videoRef.current) {
+        if (videoRef.current) {
           videoRef.current.srcObject = stream;
-        } else {
-          videoRef.current.src = window.URL.createObjectURL(stream);
         }
       })
       .catch((error) => {
@@ -25,9 +24,9 @@ export default function Camera() {
   }
 
   useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices && 'getUserMedia' in navigator.mediaDevices) {
       setShow(true);
-      setVideoStream();
+      setVideoStream({ facingMode: videoFacingMode });
     }
   }, []);
 
@@ -39,10 +38,8 @@ export default function Camera() {
     >
       <video
         onClick={() => {
-          let newFacingMode =
-            videoFacingMode === "user" ? "environment" : "user";
+          let newFacingMode: FacingMode = videoFacingMode === "user" ? "environment" : "user";
           setVideoFacingMode(newFacingMode);
-          console.log(newFacingMode);
           setVideoStream({ facingMode: newFacingMode });
         }}
         ref={videoRef}

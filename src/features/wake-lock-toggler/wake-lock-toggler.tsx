@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.sass";
 
+type Status = "activate" | "deactivate"
+
 export default function WakeUpToggler() {
-  const [show, setShow] = useState(false);
-  const [status, setStatus] = useState("activate"); // [active, inactive, undefined
-  const wakeLock = useRef(null);
+  const [show, setShow] = useState<boolean>(false);
+  const [status, setStatus] = useState<Status>("activate");
+  const wakeLock = useRef<WakeLockSentinel | null>(null);
 
   const toggleWakeLock = async () => {
     if (wakeLock.current === null) {

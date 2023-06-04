@@ -4,7 +4,7 @@ import cover256 from "../../assets/song-cover-256.png";
 import cover512 from "../../assets/song-cover-512.png";
 
 export default function MediaSession() {
-  const audioRef = useRef();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   //  there' a bug in mediaSession API
   // if I switch the playback state, the cover will gone

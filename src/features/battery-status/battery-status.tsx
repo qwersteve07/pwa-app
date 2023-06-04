@@ -2,12 +2,13 @@ import { useLayoutEffect, useState } from "react";
 import styles from "./index.module.sass";
 
 export default function BatteryStatus() {
-  const [show, setShow] = useState(false);
-  const [batteryLevel, setBatteryLevel] = useState(0);
-  const [batteryCharging, setBatteryCharing] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [batteryLevel, setBatteryLevel] = useState<number>(0);
+  const [batteryCharging, setBatteryCharing] = useState<boolean>(false);
 
   const startBatteryWatch = async () => {
-    const battery = await navigator.getBattery();
+    const navigatorWithBattery = navigator as NavigatorWithBattery
+    const battery = await navigatorWithBattery.getBattery();
     updateBatteryInfo();
 
     function updateBatteryInfo() {
@@ -47,7 +48,7 @@ export default function BatteryStatus() {
         backgroundColor: batteryCharging ? "#24bd24" : "transparent",
       }}
     >
-      {batteryLevel * 100} %
+      {(batteryLevel * 100).toFixed(0)} %
     </div>
   );
 }

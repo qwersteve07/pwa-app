@@ -23,12 +23,12 @@ export const createNotificationSubscription = async () => {
     .then((registration) => {
       return registration.pushManager.subscribe(options);
     })
-    .then((subscription) => {
+    .then((subscription: PushSubscription) => {
       console.log("user is subscribed", subscription);
       return http.subscribePushNotification(subscription);
     });
 };
 
-export const receiveNotification = (subscriptionId) => {
+export const receiveNotification = (subscriptionId: string) => {
   http.fetchPushNotification(subscriptionId);
 };
