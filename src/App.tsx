@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import BatteryStatus from "./features/battery-status/battery-status";
 import InstallPromptButton from "./features/install-prompt-button/install-prompt-button";
@@ -9,6 +9,13 @@ import PushNotification from "./features/push-notification/push-notification";
 
 function App() {
   const [count, setCount] = useState(0);
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   return (
     <>
@@ -22,6 +29,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <input ref={inputRef} />
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
